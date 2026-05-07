@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dioses en Guerra — Mitología Mexica 1v1</title>
+  <meta name="description" content="Juego de estrategia 1v1 local con temática de mitología mexica. Elige tu dios, construye tu mazo y destruye el templo rival." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 1 — MENÚ PRINCIPAL
+════════════════════════════════════════════════════════════ -->
+<section id="screen-menu" class="screen screen-bg active">
+  <div class="game-emblem">🏛️</div>
+  <h1 class="game-logo">DIOSES EN GUERRA</h1>
+  <p class="game-subtitle">Mitología Mexica · Estrategia 1v1 Local</p>
+  <button id="btn-new-game" class="btn btn-primary">⚔️ Nueva Partida</button>
+  <p style="margin-top:2.5rem; font-size:0.72rem; color:rgba(240,230,204,0.3); letter-spacing:0.12em; text-align:center; line-height:2">
+    J1: <strong style="color:rgba(41,182,246,0.7)">Z X C V</strong> &nbsp;|&nbsp; J2: <strong style="color:rgba(255,112,67,0.7)">1 2 3 4</strong>
+  </p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 2 — SELECCIÓN DE DIOS · JUGADOR 1
+════════════════════════════════════════════════════════════ -->
+<section id="screen-select-god-p1" class="screen screen-bg">
+  <button class="btn btn-back" id="back-god-p1">← Menú</button>
+  <h2 id="god-select-title-p1" class="section-title"></h2>
+  <div id="god-grid-p1" class="god-grid"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 3 — SELECCIÓN DE DIOS · JUGADOR 2
+════════════════════════════════════════════════════════════ -->
+<section id="screen-select-god-p2" class="screen screen-bg">
+  <button class="btn btn-back" id="back-god-p2">← Dios J1</button>
+  <h2 id="god-select-title-p2" class="section-title"></h2>
+  <div id="god-grid-p2" class="god-grid"></div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 4 — DECK BUILDER · JUGADOR 1
+════════════════════════════════════════════════════════════ -->
+<section id="screen-deck-p1" class="screen screen-bg">
+  <button class="btn btn-back" id="back-deck-p1">← Dios J2</button>
+  <h2 id="deck-title-p1" class="section-title"></h2>
+  <div class="deck-layout">
+    <!-- Left: troop pool -->
+    <div>
+      <p class="troop-pool-label">⚔️ Elige 6 Tropas para tu Mazo</p>
+      <div id="deck-troops-p1" class="troop-pool"></div>
+    </div>
+    <!-- Right: sidebar -->
+    <div class="deck-sidebar">
+      <div class="deck-sidebar-title">🏛️ Poderes Divinos (incluidos)</div>
+      <div id="deck-powers-p1" class="deck-powers"></div>
+      <div class="deck-sidebar-title">⚔️ Tropas Elegidas</div>
+      <div id="deck-slots-p1" class="deck-slots"></div>
+      <div id="deck-count-p1" class="deck-count">0/6 tropas</div>
+      <button id="deck-confirm-p1" class="btn btn-primary" disabled>
+        Confirmar Mazo ➜
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 5 — DECK BUILDER · JUGADOR 2
+════════════════════════════════════════════════════════════ -->
+<section id="screen-deck-p2" class="screen screen-bg">
+  <button class="btn btn-back" id="back-deck-p2">← Mazo J1</button>
+  <h2 id="deck-title-p2" class="section-title"></h2>
+  <div class="deck-layout">
+    <div>
+      <p class="troop-pool-label">⚔️ Elige 6 Tropas para tu Mazo</p>
+      <div id="deck-troops-p2" class="troop-pool"></div>
+    </div>
+    <div class="deck-sidebar">
+      <div class="deck-sidebar-title">🏛️ Poderes Divinos (incluidos)</div>
+      <div id="deck-powers-p2" class="deck-powers"></div>
+      <div class="deck-sidebar-title">⚔️ Tropas Elegidas</div>
+      <div id="deck-slots-p2" class="deck-slots"></div>
+      <div id="deck-count-p2" class="deck-count">0/6 tropas</div>
+      <button id="deck-confirm-p2" class="btn btn-primary" disabled>
+        ¡Comenzar Batalla! ⚔️
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 6 — ARENA DE BATALLA
+════════════════════════════════════════════════════════════ -->
+<section id="screen-battle" class="screen">
+  <canvas id="battle-canvas"></canvas>
+  <p class="controls-hint">J1: Z X C V &nbsp;|&nbsp; J2: 1 2 3 4</p>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PANTALLA 7 — VICTORIA
+════════════════════════════════════════════════════════════ -->
+<section id="screen-victory" class="screen screen-bg">
+  <h1 class="victory-title">⚔️ VICTORIA ⚔️</h1>
+  <p id="victory-msg"></p>
+  <div id="victory-god"></div>
+  <div class="victory-buttons">
+    <button id="btn-rematch" class="btn btn-primary">🔄 Revancha</button>
+    <button id="btn-menu" class="btn">🏠 Menú Principal</button>
+  </div>
+</section>
+
+<!-- ─── Scripts ─────────────────────────────────────────────── -->
+<script src="js/data.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
